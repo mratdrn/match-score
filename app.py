@@ -2,11 +2,21 @@ import requests
 import redis
 import time
 
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # .env dosyasını yükler
+
+API_KEY = os.getenv("API_KEY")
+DEBUG = os.getenv("DEBUG")
+
+print("API Key:", API_KEY)
+print("Debug modu:", DEBUG)
+
+
 # Redis bağlantısı
 r = redis.Redis(host='localhost', port=6379, db=0)
-
-API_KEY = "98bc6887cb868bf41ec78bb242a2e75e"
-API_URL = "https://v3.football.api-sports.io/fixtures?live=all"
 
 headers = {
     "x-apisports-key": API_KEY
