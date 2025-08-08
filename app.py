@@ -10,6 +10,7 @@ load_dotenv()  # .env dosyasını yükler
 
 API_KEY = os.getenv("API_KEY")
 DEBUG = os.getenv("DEBUG")
+API_URL = os.getenv("API_URL")
 
 print("API Key:", API_KEY)
 print("Debug modu:", DEBUG)
