@@ -17,7 +17,19 @@ print("Debug modu:", DEBUG)
 
 
 # Redis bağlantısı
-r = redis.Redis(host='localhost', port=6379, db=0)
+
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
+REDIS_PASSWORD = os.getenv("REDIS_PASSWORD") or None
+
+r = redis.Redis(
+    host=REDIS_HOST,
+    port=REDIS_PORT,
+    password=REDIS_PASSWORD,
+    db=0,
+    decode_responses=True
+)
+
 
 headers = {
     "x-apisports-key": API_KEY
