@@ -1,39 +1,42 @@
-version: "3.9"
+# Docker compose dosyası üç servis barındıracak; api, fetcher, redis
+# Docker compose'un yeni sürümleri için zorunlu olmadığından version bilgisi kaldırıldı
 
-services:
-  api:
-    build:
-      context: .
+services:                    
+  api:                           # Flask API servisi redisten veriyi okuyup JSON olarak dönecek
+    build:                       # Docker build işlemi bu dizinden yapılacak
+      context: .                
       dockerfile: dockerfile-api
     container_name: matchscore_api
     ports:
-      - "5000:5000"
-    environment:
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - API_KEY=${API_KEY}
-      - API_URL=${API_URL}
-      - DEBUG=${DEBUG}
-    depends_on:
+      - "5000:5000"             # Host:Container port eşlemesi
+    env_file:
+      - .env
+    depends_on:                 # API, redisten sonra başlayacak
       - redis
+    restart: always             # API servisi her durumda yeniden başlatılacak   
 
-  fetcher:
+
+  fetcher:                      # API'den skorları çekip redise yazacağız
     build:
       context: .
       dockerfile: dockerfile-fetcher
     container_name: matchscore_fetcher
-    environment:
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-      - API_KEY=${API_KEY}
-      - API_URL=${API_URL}
+    env_file:
+      - .env
     depends_on:
       - redis
+    restart: always           # Fetcher servisi her durumda yeniden başlatılacak
 
-  redis:
-    image: redis:7
+
+  redis:                       # Redis veritabanı ile skor verilerini RAM üzerinde tutacağız
+    image: redis:7             # Kullanılan resmi imaj
     container_name: matchscore_redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data     # Redis container’ının içindeki varsayılan veri dizini, YML'de, volume adı:container yolu eşlemesi ile yapıldı.
+    restart: unless-stopped   # Redis servisi sadece elle durdurulmadıkça yeniden başlatılıcak, redis için bu yapı daha mantıklı
 
-# Servislerin başlama sırası: önce Redis başlar, sonra diğerleri.
+
+volumes:                  # redis_data: Redis verilerinin container silinse bile korunması için
+  redis_data:
