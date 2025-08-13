@@ -1,0 +1,42 @@
+# Docker compose dosyası üç servis barındıracak; api, fetcher, redis
+# Docker compose'un yeni sürümleri için zorunlu olmadığından version bilgisi kaldırıldı
+
+services:                    
+  api:                           # Flask API servisi redisten veriyi okuyup JSON olarak dönecek
+    build:                       # Docker build işlemi bu dizinden yapılacak
+      context: .                
+      dockerfile: dockerfile-api
+    container_name: matchscore_api
+    ports:
+      - "5000:5000"             # Host:Container port eşlemesi
+    env_file:
+      - .env
+    depends_on:                 # API, redisten sonra başlayacak
+      - redis
+    restart: always             # API servisi her durumda yeniden başlatılacak   
+
+
+  fetcher:                      # API'den skorları çekip redise yazacağız
+    build:
+      context: .
+      dockerfile: dockerfile-fetcher
+    container_name: matchscore_fetcher
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: always           # Fetcher servisi her durumda yeniden başlatılacak
+
+
+  redis:                       # Redis veritabanı ile skor verilerini RAM üzerinde tutacağız
+    image: redis:7             # Kullanılan resmi imaj
+    container_name: matchscore_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data     # Redis container’ının içindeki varsayılan veri dizini, YML'de, volume adı:container yolu eşlemesi ile yapıldı.
+    restart: unless-stopped   # Redis servisi sadece elle durdurulmadıkça yeniden başlatılıcak, redis için bu yapı daha mantıklı
+
+
+volumes:                  # redis_data: Redis verilerinin container silinse bile korunması için
+  redis_data:
