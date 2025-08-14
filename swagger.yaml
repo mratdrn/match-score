@@ -1,6 +1,7 @@
 openapi: 3.0.4  # OpenAPI spesifikasyonunun sürümü
 info:
   title: match-score API
+  version: 1.0.0              # API’nin sürümü, 1.0.0 → İlk stabil sürüm
   description: Service that provide live match scores via API.
 
 servers:
