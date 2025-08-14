@@ -1,0 +1,49 @@
+openapi: 3.0.4  # OpenAPI spesifikasyonunun sürümü
+info:
+  title: match-score API
+  description: Service that provide live match scores via API.
+
+servers:
+  - url: http://localhost:5000  # API’nin base URL’si. Swagger UI veya başka araçlar endpointleri bu adresin altına ekleyerek tam URL oluşturur.
+    description: Local development server.
+
+paths:
+  /scores:  # Endpoint yolu. /scores, canlı maç skorlarını almak için kullanılıyor.
+    get:    # HTTP methodu, veri almak için.
+      summary: Show live match scores.
+      description: Live match scores stored in Redis are returned in JSON format.
+
+
+      responses:  # Endpoint’in olası HTTP response durumları buraya yazılır.
+
+        "200":    # Başarılı durum
+          description: Successful, score data returned.
+          content:
+            application/json:
+              schema:
+                type: object  # JSON objesi döneceğini belirtiyoruz.
+                example:      # Kullanıcı veya geliştirici endpointi test ederken görmesini sağlayan örnek.                                            
+                  matches:
+                    - home_team: "Fenerbahçe"
+                      away_team: "Feyenoord"
+                      score: "5-2"
+                      time: "51'"
+
+        '404':   # Veri bulunamadı
+          description: Data not found
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: "Data not found"
+
+        '500':   # JSON parse hatası
+          description: JSON parse error
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  error: "JSON parse error"
+                  message: "The live score data could not be processed. Please check the data format."
