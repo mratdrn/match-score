@@ -13,9 +13,9 @@ def read_scores():
             # JSON kodunun okunaklığı için;
             print(json.dumps(parsed, indent=2, ensure_ascii=False))
         except Exception as e:
-            print("JSON parse hatası:", e)
+            print("JSON parse hatası:", e) #500
     else:
-        print("Redis'te canlı skor verisi bulunamadı.")
+        print("Redis'te canlı skor verisi bulunamadı.") #404
 
 if __name__ == "__main__":
     read_scores()
