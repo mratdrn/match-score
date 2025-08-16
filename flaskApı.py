@@ -1,10 +1,24 @@
 from flask import Flask, jsonify
 import redis
 import json
+from flask_swagger_ui import get_swaggerui_blueprint
 
 app = Flask(__name__)
 
 r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+
+# Swagger UI ayarları 
+SWAGGER_URL = '/swagger'  # Swagger UI'yi bu path'ten serve edeceğiz
+API_URL = '/static/swagger.yaml'  # swagger.yaml dosyanın yolu (Flask static klasöründe olmalı)
+
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Live Match Scores API"
+    }
+)
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
 @app.route('/scores')
 def get_scores():
