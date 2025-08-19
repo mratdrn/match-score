@@ -5,7 +5,6 @@ This project uses an API to fetch live match scores, stores this data in a Redis
 
 
 ## Requirements
-
 - Python 3.7+
 - Redis server
 - Python packages:
@@ -18,24 +17,26 @@ This project uses an API to fetch live match scores, stores this data in a Redis
 
 
 ## Installation
-Install the required Python packages:
+Install the required Python packages:  
 `pip install -r requirements.txt`
 
-Create a `.env` file in the project root and add your API key:
+Create a `.env` file in the project root and add your API key: 
  `API_KEY=your_api_key_here`
 
 Make sure the Redis server is running.
 
 
 ## Running
-To fetch data and save it to Redis:
-  python app.py
+To fetch data and save it to Redis:  
+  `python app.py`
 
-To start the Flask API:
+To start the Flask API:  
   `python flaskApı.py`
 
 After the API is running:
-  http://localhost:5000/scores  You can access live scores in JSON format at this address.
+  http://localhost:5000/scores 
+
+You can access live scores in JSON format at this address.
 
 
 ## API Usage
@@ -63,23 +64,23 @@ For the API:
 
   `docker build -f dockerfile-api -t match-score-api .`
   `docker run -p 5000:5000 match-score-api`
---
+
 For the data fetching service:
 
   `docker build -f dockerfile-fetcher -t match-score-fetcher .`
   `docker run match-score-fetcher`
---
+
 To start both services together using Docker Compose:
 
   `docker-compose up`
 
 
 ## Swagger Support
-The project uses Swagger for API documentation.
-Documentation file: static/swagger.yaml
+The project uses Swagger for API documentation.  
+Documentation file: `static/swagger.yaml`
 
 You can access it in the browser while the Flask application is running:  
- http://localhost:5000/swagger
+ `http://localhost:5000/swagger`
 
 Swagger UI allows you to visually explore and test API endpoints.
 
@@ -101,8 +102,8 @@ match-score/
 ├── readscores.py         # Python code that fetches the original score data
 └── requirements.txt      # Lists Python dependencies
 ```
-
-----------
+-
+-
 
 # TÜRKÇE
 
@@ -136,11 +137,13 @@ Redis sunucusunun çalıştığından emin olun.
 Veri çekme ve Redis'e kaydetme için:
   `python app.py`
 
-Flask API'yi başlatmak için:
+Flask API'yi başlatmak için:  
   `python flaskApı.py`
 
 API çalıştıktan sonra:
- http://localhost:5000/scores  adresinden canlı skorları JSON formatında alabilirsiniz.
+ `http://localhost:5000/scores`
+ 
+  adresinden canlı skorları JSON formatında alabilirsiniz.
 
 
 ## API Kullanımı
@@ -168,12 +171,12 @@ API için:
 
   `docker build -f dockerfile-api -t match-score-api .`
   `docker run -p 5000:5000 match-score-api`
---
+
 Veri çekme işlemi için:
 
   `docker build -f dockerfile-fetcher -t match-score-fetcher .`
   `docker run match-score-fetcher`
---
+
 Docker Compose kullanarak her iki servisi birlikte başlatmak için:
 
   `docker-compose up`
@@ -181,7 +184,7 @@ Docker Compose kullanarak her iki servisi birlikte başlatmak için:
 
 ## Swagger Desteği
 Projede Swagger kullanılarak API dokümantasyonu oluşturulmuştur.
-Dokümantasyon dosyası: static/swagger.yaml
+Dokümantasyon dosyası: `static/swagger.yaml`
 
 Flask uygulaması çalışırken tarayıcıdan erişebilirsiniz: 
  http://localhost:5000/swagger
