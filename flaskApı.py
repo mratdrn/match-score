@@ -1,12 +1,35 @@
-from flask import Flask, jsonify
-import redis
-import json
+# Redis’teki canlı skor verisini Flask API ile tarayıcıya sunacağız.
+# We will serve the live score data stored in Redis to the browser using a Flask API.
 
-app = Flask(__name__)
+from flask import Flask, jsonify                      # Flask web framework’ünü ve JSON response döndüren jsonify fonksiyonunu import ediyoruz.
+import redis                                          # Redis ile bağlantı kurmak için Python Redis kütüphanesi.
+import json                                           # Python’un standart JSON kütüphanesi.
+from flask_swagger_ui import get_swaggerui_blueprint  # Flask içinde swagger uı'yı serve etmek için kullanılır.
 
+# Flask'i başlatıyoruz
+app = Flask(__name__)        
+
+# Redis bağlantısı
 r = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
 
-@app.route('/scores')
+# Swagger UI ayarları 
+SWAGGER_URL = '/swagger'  # Swagger uı'yı bu path'ten serve edeceğiz.
+API_URL = '/static/swagger.yaml'  # swagger.yaml dosya yolu, static isimli ayrı dizine taşındı.
+
+# Swagger uı blueprint oluşturuldu
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Live Match Scores API"
+    }
+)
+# Swagger blueprint flask'a ekleniyor
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+
+
+# /scores endpoint’ini tanımladık böylece HTTP GET varsayılan olarak çalışır ve canlı maç skorlarını JSON formatında döndürür.
+@app.route('/scores')                
 def get_scores():
     data = r.get("live_scores")
     if not data:
@@ -49,5 +72,19 @@ def get_scores():
     except Exception as e:
         return jsonify({"error": "JSON parse hatası", "message": str(e)}), 500
 
+# Flask'i 0.0.0.0:5000’te debug modunda çalıştırır.
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+
+# API endpoint URL’si
+# http://127.0.0.1:5000/scores
+# Redis’ten alınan canlı maç skorlarını JSON formatında döner.
+
+# Swagger uı endpoint’i
+# http://127.0.0.1:5000/swagger
+# Swagger uı üzerinden API dokümantasyonunu görüp test edebilirsin.
+
+# swagger.yaml dosyası
+# http://127.0.0.1:5000/static/swagger.yaml
+# Swagger uı'nın kullandığı YAML dosyası

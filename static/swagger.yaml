@@ -47,4 +47,4 @@ paths:
                 type: object
                 example:
                   error: "JSON parse error"
-                  message: "The live score data could not be processed. Please check the data format."
+                  message: "The live score data could not be processed. Please check the data format." 
