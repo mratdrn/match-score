@@ -21,7 +21,7 @@ Install the required Python packages:
 pip install -r requirements.txt
 
 Create a `.env` file in the project root and add your API key:
-API_KEY=your_api_key_here
+ API_KEY=your_api_key_here
 
 Make sure the Redis server is running.
 
@@ -41,7 +41,7 @@ After the API is running:
 GET /scores: Returns live scores and calculated 2.5 over, mutual goal, and winner information in JSON format.
 
  Example Response;
-
+```
   "live_scores": 
     {
       "25_upper": false,
@@ -52,6 +52,7 @@ GET /scores: Returns live scores and calculated 2.5 over, mutual goal, and winne
       "visitor": "AC Oulu",
       "visitor_score": 0
     }
+```
 
 
 ## Docker Support
@@ -59,17 +60,17 @@ The project is containerized using Docker.
 
 For the API:
 
-  docker build -f dockerfile-api -t match-score-api .
-  docker run -p 5000:5000 match-score-api
+  ```docker build -f dockerfile-api -t match-score-api .
+  docker run -p 5000:5000 match-score-api```
 --
 For the data fetching service:
 
-  docker build -f dockerfile-fetcher -t match-score-fetcher .
-  docker run match-score-fetcher
+  ```docker build -f dockerfile-fetcher -t match-score-fetcher .
+  docker run match-score-fetcher```
 --
 To start both services together using Docker Compose:
 
-  docker-compose up
+  `docker-compose up`
 
 
 ## Swagger Support
@@ -83,7 +84,7 @@ Swagger UI allows you to visually explore and test API endpoints.
 
 
 ## File Structure
-
+```
 match-score/
 ├── static/
 │   └── swagger.yaml      # Swagger API documentation file
@@ -98,6 +99,7 @@ match-score/
 ├── README.md             # General information about the project
 ├── readscores.py         # Python code that fetches the original score data
 └── requirements.txt      # Lists Python dependencies
+```
 
 ----------
 
@@ -144,7 +146,7 @@ API çalıştıktan sonra:
 GET /scores: Canlı skorları ve hesaplanan 2.5 üst, karşılıklı gol, kazanan bilgilerini JSON formatında döndürür.
  
  Örnek yanıt;
-
+```
   "live_scores": 
     {
       "25_upper": false,
@@ -155,6 +157,7 @@ GET /scores: Canlı skorları ve hesaplanan 2.5 üst, karşılıklı gol, kazana
       "visitor": "AC Oulu",
       "visitor_score": 0
     }
+```
 
 
 ## Docker Desteği
@@ -162,17 +165,17 @@ Proje, Docker ile konteynerleştirilmiştir.
 
 API için:
 
-  docker build -f dockerfile-api -t match-score-api .
-  docker run -p 5000:5000 match-score-api
+  ```docker build -f dockerfile-api -t match-score-api .
+  docker run -p 5000:5000 match-score-api```
 --
 Veri çekme işlemi için:
 
-  docker build -f dockerfile-fetcher -t match-score-fetcher .
-  docker run match-score-fetcher
+  ```docker build -f dockerfile-fetcher -t match-score-fetcher .
+  docker run match-score-fetcher```
 --
 Docker Compose kullanarak her iki servisi birlikte başlatmak için:
 
-  docker-compose up
+  `docker-compose up`
 
 
 ## Swagger Desteği
@@ -186,7 +189,7 @@ Swagger UI sayesinde API endpointlerini görsel olarak inceleyebilir ve test ede
 
 
 ## Dosya Yapısı :
-
+```
 match-score/
 ├── static/
 │   └── swagger.yaml      # Swagger API dokümantasyon dosyası
@@ -201,3 +204,4 @@ match-score/
 ├── README.md             # Proje hakkında genel bilgiler
 ├── readscores.py         # Orijinal skor verisini çeken Python kodu (ihtiyaca göre)
 └── requirements.txt      # Python bağımlılıklarını listeler
+```
