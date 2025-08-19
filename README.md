@@ -5,23 +5,24 @@ This project uses an API to fetch live match scores, stores this data in a Redis
 
 
 ## Requirements
-Python 3.7+
-Redis server
-Python packages:
+
+- Python 3.7+
+- Redis server
+- Python packages:
   - flask
   - redis
   - python-dotenv
   - flask-swagger-ui
+- API key (see the .env file for details)
 
-API key (see the .env file for details)
 
 
 ## Installation
 Install the required Python packages:
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 Create a `.env` file in the project root and add your API key:
- API_KEY=your_api_key_here
+ `API_KEY=your_api_key_here`
 
 Make sure the Redis server is running.
 
@@ -31,7 +32,7 @@ To fetch data and save it to Redis:
   python app.py
 
 To start the Flask API:
-  python flaskApı.py
+  `python flaskApı.py`
 
 After the API is running:
   http://localhost:5000/scores  You can access live scores in JSON format at this address.
@@ -60,13 +61,13 @@ The project is containerized using Docker.
 
 For the API:
 
-  ```docker build -f dockerfile-api -t match-score-api .
-  docker run -p 5000:5000 match-score-api```
+  `docker build -f dockerfile-api -t match-score-api .`
+  `docker run -p 5000:5000 match-score-api`
 --
 For the data fetching service:
 
-  ```docker build -f dockerfile-fetcher -t match-score-fetcher .
-  docker run match-score-fetcher```
+  `docker build -f dockerfile-fetcher -t match-score-fetcher .`
+  `docker run match-score-fetcher`
 --
 To start both services together using Docker Compose:
 
@@ -110,33 +111,33 @@ Bu proje, canlı maç skorlarını çekmek için bir API kullanır, bu verileri 
 
 
 ## Gereksinimler 
-Python 3.7+
-Redis sunucusu
-Python paketleri:
+
+- Python 3.7+
+- Redis sunucusu
+- Python paketleri:
   - flask
   - redis
   - python-dotenv
   - flask-swagger-ui
-
-API anahtarı (detaylar için .env dosyasına bakınız)
+- API anahtarı (detaylar için .env dosyasına bakınız)
 
 
 ## Kurulum 
 Gerekli Python paketlerini yükleyin:
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 Proje kök dizinine bir .env dosyası oluşturun ve API anahtarınızı ekleyin:
-API_KEY= api_key_buraya_yazın
+`API_KEY= api_key_buraya_yazın`
 
 Redis sunucusunun çalıştığından emin olun.
 
 
 ## Çalıştırma 
 Veri çekme ve Redis'e kaydetme için:
-  python app.py
+  `python app.py`
 
 Flask API'yi başlatmak için:
-  python flaskApı.py
+  `python flaskApı.py`
 
 API çalıştıktan sonra:
  http://localhost:5000/scores  adresinden canlı skorları JSON formatında alabilirsiniz.
@@ -165,13 +166,13 @@ Proje, Docker ile konteynerleştirilmiştir.
 
 API için:
 
-  ```docker build -f dockerfile-api -t match-score-api .
-  docker run -p 5000:5000 match-score-api```
+  `docker build -f dockerfile-api -t match-score-api .`
+  `docker run -p 5000:5000 match-score-api`
 --
 Veri çekme işlemi için:
 
-  ```docker build -f dockerfile-fetcher -t match-score-fetcher .
-  docker run match-score-fetcher```
+  `docker build -f dockerfile-fetcher -t match-score-fetcher .`
+  `docker run match-score-fetcher`
 --
 Docker Compose kullanarak her iki servisi birlikte başlatmak için:
 
